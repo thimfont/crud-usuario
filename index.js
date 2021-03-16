@@ -72,12 +72,16 @@ app.post('/usuarios', (req, res) => {
 });
 
 app.put('/usuarios/:id', (req, res) => {
-    const posicao = parseInt(req.params.id) - 1;
-    const atualizado = req.body;
-
-    usuarios[posicao].renda = atualizado.renda;
-
-    res.status(200).send('Atualizado.');
+    const id = parseInt(req.params.id);
+    const usuario = req.body;
+    const sql = "UPDATE Usuarios SET ? WHERE id = ?";
+    conexaoComBancoDeDados.query(sql, [usuario, id], (erro, resultado) => {
+        if (erro) {
+            res.status(400).json(erro);
+        } else {
+            res.status(200).json({ ...usuario, id });
+        }
+    })
 })
 
 app.delete('/usuarios/:id', (req, res) => {
@@ -91,7 +95,6 @@ app.delete('/usuarios/:id', (req, res) => {
         }
     });
 });
-
 
 app.listen(3000, function () {
     console.log("Servidor rodando na porta 3000.");
