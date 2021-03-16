@@ -37,7 +37,14 @@ usuarios.push({ 'cadastro': '14/03/2021', 'nome': 'Rose', 'renda': '500', 'email
 
 // rotas
 app.get('/usuarios', (req, res) => {
-    res.status(200).send(usuarios);
+    const sql = 'SELECT * FROM Usuarios';
+    conexaoComBancoDeDados.query(sql, (erro, resultado) => {
+        if (erro) {
+            res.status(400).json(erro);
+        } else {
+            res.status(200).json(resultado);
+        }
+    })
 });
 
 app.get('/usuarios/:id', (req, res) => {
