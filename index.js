@@ -29,12 +29,6 @@ conexaoComBancoDeDados.query(sql, erro => {
     }
 });
 
-
-// database fake
-const usuarios = [];
-usuarios.push({ 'cadastro': '15/03/2021', 'nome': 'Thiago', 'renda': '1000', 'email': 'thiago@gmail.com' });
-usuarios.push({ 'cadastro': '14/03/2021', 'nome': 'Rose', 'renda': '500', 'email': 'rose@gmail.com' });
-
 // rotas
 app.get('/usuarios', (req, res) => {
     const sql = 'SELECT * FROM Usuarios';
