@@ -1,19 +1,7 @@
 const app = require('./config/expressCustomizado');
 const conexaoComBancoDeDados = require('./config/conexaoMysql');
-
-const sql = 'CREATE TABLE IF NOT EXISTS Usuarios(id int NOT NULL AUTO_INCREMENT, ' +
-    'nome varchar(50) NOT NULL, ' +
-    'email varchar(30) NOT NULL, ' +
-    'cadastro datetime NOT NULL, ' +
-    'renda double,' +
-    'PRIMARY KEY(id))';
-conexaoComBancoDeDados.query(sql, erro => {
-    if (erro) {
-        console.log(`Erro ao criar tabela: ${erro}`);
-    } else {
-        console.log('Tabela criada.')
-    }
-});
+const UsuarioDao = require('./repository/usuarioDao');
+const dao = UsuarioDao(conexaoComBancoDeDados);
 
 // rotas
 app.get('/usuarios', (req, res) => {
