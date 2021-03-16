@@ -61,8 +61,14 @@ app.get('/usuarios/:id', (req, res) => {
 
 app.post('/usuarios', (req, res) => {
     const usuario = req.body;
-    usuarios.push(usuario);
-    res.status(201).send('Usuário salvo com sucesso.');
+    const sql = "INSERT INTO Usuarios set ?";
+    conexaoComBancoDeDados.query(sql, usuario, (erro, resultado) => {
+        if (erro) {
+            res.status(400).json(erro);
+        } else {
+            res.status(201).json(usuario);
+        }
+    });
 });
 
 app.put('/usuarios/:id', (req, res) => {
