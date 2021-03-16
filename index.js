@@ -81,9 +81,15 @@ app.put('/usuarios/:id', (req, res) => {
 })
 
 app.delete('/usuarios/:id', (req, res) => {
-    const posicao = parseInt(req.params.id) - 1;
-    usuarios.splice(posicao, 1);
-    res.status(200).send(`Usuário com ${posicao} foi removido com sucesso`);
+    const id = parseInt(req.params.id);
+    const sql = 'DELETE FROM Usuarios WHERE id = ?';
+    conexaoComBancoDeDados.query(sql, id, erro => {
+        if (erro) {
+            res.status(400).json(erro);
+        } else {
+            res.status(200).json(id);
+        }
+    });
 });
 
 
