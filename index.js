@@ -1,14 +1,5 @@
 const app = require('./config/expressCustomizado');
-const mysql = require('mysql');
-
-// database
-const conexaoComBancoDeDados = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'Thi@g0Root',
-    database: 'crud_usuarios'
-});
+const conexaoComBancoDeDados = require('./config/conexaoMysql');
 
 const sql = 'CREATE TABLE IF NOT EXISTS Usuarios(id int NOT NULL AUTO_INCREMENT, ' +
     'nome varchar(50) NOT NULL, ' +
