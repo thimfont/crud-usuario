@@ -48,9 +48,15 @@ app.get('/usuarios', (req, res) => {
 });
 
 app.get('/usuarios/:id', (req, res) => {
-    const id = parseInt(req.params.id) - 1;
-    const usuario = usuarios[id];
-    res.status(200).send(usuario);
+    const id = parseInt(req.params.id);
+    const sql = `SELECT * FROM Usuarios WHERE id = ${id}`;
+    conexaoComBancoDeDados.query(sql, (erro, resultado) => {
+        if (erro) {
+            res.status(400).json(erro);
+        } else {
+            res.status(200).json(resultado);
+        }
+    });
 });
 
 app.post('/usuarios', (req, res) => {
